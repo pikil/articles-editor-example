@@ -3,14 +3,23 @@
 @custom-variant dark (&:is([data-mode="dark"] *));
 
 @theme {
+  --color-primary: rgb(var(--primary));
+  --color-surface: rgb(var(--surface));
+  --color-on-surface: rgb(var(--on-surface));
   --color-faded: rgb(var(--faded));
 }
 
 :root {
+  --primary: 0 132 209;
+  --surface: 255 255 255;
+  --on-surface: 0 0 0; /* Anythng on surface */
   --faded: 157 157 157;
 }
 
 [data-mode="dark"] {
+  --primary: 0 132 209;
+  --surface: 54 65 83;
+  --on-surface: 255 255 255; /* Anythng on surface */
   --faded: 156 163 175;
 }
 
@@ -18,4 +27,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.btn-loading > *:not(.loading-content) {
+  opacity: 0;
 }

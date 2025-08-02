@@ -15,10 +15,17 @@
   {/each}
 </div>
 
+<div class="flex justify-center pt-8">
+  <Button label="Sign out" class="text-white bg-red-500" loading={signingOut} onclick={signOut} />
+</div>
+
 <script lang="ts">
+  import Button from '$components/ui/buttons/Button.svelte';
   import { pageClasses } from '$data/css-classes';
   import { mainNameShort } from '$data/strings';
+  import { post } from '$lib/http';
   import { pageTitle } from '$lib/stores/layout-store';
+  import { userRole, userSid } from '$lib/stores/user-store';
 
   interface Link {
     label: string;
@@ -45,4 +52,15 @@
   ];
 
   $pageTitle = mainNameShort;
+
+  let signingOut: boolean = $state(false);
+
+  const signOut = async () => {
+    signingOut = true;
+
+    await post('user/sign-out');
+
+    $userRole = 0;
+    $userSid = '';
+  };
 </script>

@@ -60,6 +60,22 @@ export default ts.config(
     }
   },
   {
+    ignores: [
+      '.vscode/*',
+      '.git/*',
+      '.DS_Store',
+      'node_modules/*',
+      'build/*',
+      '.svelte-kit/*',
+      '.env',
+      '.env.*',
+      'package-lock.json',
+      'static/*',
+      'tmp/*',
+      'src/lib/vendor/*'
+    ]
+  },
+  {
     files: [
       '**/*.svelte',
       '**/*.svelte.ts',
@@ -72,19 +88,6 @@ export default ts.config(
         parser: ts.parser,
         svelteConfig
       }
-    },
-    ignores: [
-      '.vscode/*',
-      '.git/*',
-      '.DS_Store',
-      'node_modules/*',
-      'build/*',
-      '.svelte-kit/*',
-      '.env',
-      '.env.*',
-      'package-lock.json',
-      'static/*',
-      'tmp/*'
-    ]
+    }
   }
 );

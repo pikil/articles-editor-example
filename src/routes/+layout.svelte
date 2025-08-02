@@ -18,6 +18,7 @@
   </Main>
   <Footer />
 </div>
+<div id="modals"></div>
 
 <script lang="ts">
   import '../app.css';
@@ -29,7 +30,7 @@
   import LeftSidebar from '$themes/main/LeftSidebar.svelte';
   import { breadcrumbs } from '$lib/stores/layout-store';
   import { mainNameShort } from '$data/strings';
-  import Icon from '$ui/Icon.svelte';
+  import Icon from '$components/ui/Icon.svelte';
   import { mdiLoading } from '$lib/vendor/icons/mdi7-icons';
   import { userRole } from '$lib/stores/user-store';
 

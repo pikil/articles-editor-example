@@ -14,8 +14,8 @@
   import { pageTitle } from '$lib/stores/layout-store';
   import { biChevronRight } from '$lib/vendor/icons/bootstrap-icons';
   import { fasBars } from '$lib/vendor/icons/fontawesome6-icons';
-  import IconButton from '$ui/buttons/IconButton.svelte';
-  import Icon from '$ui/Icon.svelte';
+  import IconButton from '$components/ui/buttons/IconButton.svelte';
+  import Icon from '$components/ui/Icon.svelte';
 
   let classes = $derived('p-2 transition-padding');
   let subtitle = $derived($pageTitle === mainNameShort ? 'Dashboard' : $pageTitle);

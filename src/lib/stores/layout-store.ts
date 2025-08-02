@@ -14,3 +14,9 @@ export const setPageData = (_breadcrumbs: LinkData[]) => {
   breadcrumbs.set(_breadcrumbs || []);
   pageTitle.set(_breadcrumbs.length > 0 ? _breadcrumbs[_breadcrumbs.length - 1].label : mainNameShort);
 };
+
+/**
+ * Used for identifying the current dialog to close first
+ * No need to be writable, as noone is listening for it
+ */
+export const currentDialogs: { id: string; close: () => void; }[] = [];

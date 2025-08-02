@@ -9,6 +9,6 @@
 
 <script>
   import { mainName } from '$data/strings';
-    import { biGithub } from '$lib/vendor/icons/bootstrap-icons';
-  import IconButton from '$ui/buttons/IconButton.svelte';
+  import { biGithub } from '$lib/vendor/icons/bootstrap-icons';
+  import IconButton from '$components/ui/buttons/IconButton.svelte';
 </script>

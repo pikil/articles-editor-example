@@ -12,7 +12,7 @@ const config = {
     alias: {
       $data: 'src/lib/data',
       $themes: 'src/themes',
-      $ui: 'src/components/ui'
+      $components: 'src/components'
     }
   }
 };
