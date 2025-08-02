@@ -1,0 +1,21 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:is([data-mode="dark"] *));
+
+@theme {
+  --color-faded: rgb(var(--faded));
+}
+
+:root {
+  --faded: 157 157 157;
+}
+
+[data-mode="dark"] {
+  --faded: 156 163 175;
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}

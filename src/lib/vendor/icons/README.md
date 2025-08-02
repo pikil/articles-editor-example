@@ -1,0 +1,1 @@
+This set of icons is inpired on approach from quasar.dev project. The icons are tree-shakeable, so only the needed ones will end up in the build.
