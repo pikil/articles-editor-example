@@ -1,38 +1,57 @@
-# sv
+# Artie
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This is a showcase project to provide an idea on how articles management can be done.
 
-## Creating a project
+# JS Tech Stack
+- JS + TS;
+- SvelteKit (Svelte 5);
+- Dexie (for API mocking);
 
-If you're seeing this, you've probably already done this step. Congrats!
+# Signing in
+The project does has got an email-based and role sign in process which allows to set owner of articles and the permissions for a specific user. The credentials are stored in Local Storage until cleared or Signed out.
+
+# Browser context
+All the data is stored in IndexedDB and does not leave the web page. You will be able to see the articles in the DevTools and role/sid in Local Storage.
+
+# Dashboard
+Dashboard is the main page for the specified Internal tool. So there is no public page so to speak for a 'random' visitor.
+
+## User Roles
+The system has three user roles which can be selected in either Sign in popup or on User details page:
+- Viewer: can create articles, can see/edit own articles, can view own/published articles;
+- Moderator: can create articles, can see/edit own articles, can view all articles, can update status for any article;
+- Editor: can create articles, can see/edit any articles, *cannot* update status for any article;
+
+## Populating the data
+You can populate the Database with either 100 or 1000 articles in one go. To do this, go to Dashboard > System settings > System access. The indication that the articles were created would be in Console.
+
+## When create an article
+Any article has to go through Moderator first before they can be visivble to other users. However, owners of those articles will always be able to see them.
+
+## Keyboard events
+Confirmation dialog (e.g. on Article removal) and Create/Edit Article pages have Keyboard listeners just for better navigation.
+
+## Appearance
+The showcase supports Dark/Light modes which can be found in Dashboard > System settings > Appearance;
+
+## Running the project
+
+To run the dev version project locally:
 
 ```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+$ npm i
+$ npx playwright install
+$ npm run dev
 ```
 
-## Developing
+## Testing the project
+The testing suites are rudimentary atm, but the setup already can show that the tests can be run.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Building the project
 
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
+To create a production version of the showcase:
 
 ```sh
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.

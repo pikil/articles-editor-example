@@ -1,6 +1,7 @@
 <div class={pageClasses}>
   <PageTitle text={title} />
-  This is a test example to show how Svelte 5 works with datasets and stores.
+  <!-- eslint-disable-next-line max-len -->
+  This is a showcase project to provide an idea on how articles management can be done. Please refer to the <a href="https://github.com/pikil/articles-editor-example/README.md" class="text-primary hover:underline">README</a> file for more information.
 </div>
 
 <script>

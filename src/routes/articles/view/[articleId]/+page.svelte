@@ -8,7 +8,7 @@
       <PageTitle text={article.title} class="flex-1 ellipsis" />
       {#if isEditor}
         <div>
-          <IconButton href={'/articles/edit/' + article.id} icon={fasPencil} />
+          <IconButton href={path('/articles/edit/' + article.id)} icon={fasPencil} />
         </div>
       {/if}
     </div>
@@ -43,6 +43,7 @@
   import { get, post } from '$lib/http';
   import { setPageData } from '$lib/stores/layout-store';
   import { userRole, userSid } from '$lib/stores/user-store';
+  import { path } from '$lib/utils';
   import type { Article } from '$lib/utils/db';
   import { fasPencil } from '$lib/vendor/icons/fontawesome6-icons';
   import { onMount } from 'svelte';

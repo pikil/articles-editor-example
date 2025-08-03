@@ -19,6 +19,7 @@
   <Footer />
 </div>
 <div id="modals"></div>
+<dialog id="async-dialog"></dialog>
 
 <script lang="ts">
   import '../app.css';

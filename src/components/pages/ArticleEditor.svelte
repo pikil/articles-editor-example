@@ -5,12 +5,20 @@
 {:else}
   <div class={pageClasses}>
     <PageTitle text={title} />
-    <Input bind:value={articleTitle} maxlength={maxTitleLen} placeholder="Enter the article title..." label="Title" class="w-full" />
+    <Input
+      bind:value={articleTitle}
+      maxlength={maxTitleLen}
+      placeholder="Enter the article title..."
+      label="Title" class="w-full"
+      onenter={textarea?.focus.bind(textarea)}
+    />
     <p class="mt-6 mb-2 text-sm font-bold">Text</p>
     <textarea
+      bind:this={textarea}
       bind:value={articleText}
       class="w-full border-1 border-gray-200 dark:border-gray-400 rounded-lg min-h-56 p-3"
       placeholder="Enter article text..."
+      onkeydown={onTextareaKey}
     ></textarea>
     <div class="pt-6">
       <Button label={saveLabel} class={primaryBtnClasses} {disabled} loading={saving} onclick={save} />
@@ -33,6 +41,7 @@
   import { setPageData } from '$lib/stores/layout-store';
   import { onMount } from 'svelte';
   import { linkArticles } from '$data/links';
+  import { path } from '$lib/utils';
 
   interface Props {
     id?: number;
@@ -50,6 +59,7 @@
   let saving = $state<boolean>(false);
   let loading = $state<boolean>(false);
   let loadError = $state<string>('');
+  let textarea = $state<HTMLTextAreaElement | null>(null);
 
   const save = async () => {
     saving = true;
@@ -64,7 +74,7 @@
     );
 
     if (success) {
-      goto('/articles/view/' + (id ? id : message));
+      goto(path('/articles/view/' + (id ? id : message)));
       return;
     }
 
@@ -90,6 +100,20 @@
     }
 
     loading = false;
+  };
+
+  const onTextareaKey = (evt: KeyboardEvent) => {
+    if (!evt.metaKey)
+      return;
+
+    switch (evt.key) {
+      case 'Enter':
+        save();
+        evt.preventDefault();
+        break;
+      default:
+        break;
+    }
   };
 
   let disabled = $derived(saving

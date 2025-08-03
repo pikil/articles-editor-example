@@ -6,3 +6,5 @@ export const hashId = async (value: string) => {
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   return btoa(String.fromCharCode(...new Uint8Array(hashBuffer)));
 };
+
+export const path = (url: string) => '/articles-editor-example' + url;

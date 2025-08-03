@@ -2,7 +2,10 @@
   <div class="border-2 border-gray-100 dark:border-gray-500 rounded-lg overflow-hidden">
     <p class="text-faded p-4">{title}</p>
     <div>
-      {#each links as { label, href } (label)}
+      {#each links as { label, href }, i (label)}
+        {#if i}
+          <hr class="border-gray-200 dark:border-gray-500" />
+        {/if}
         <a {href} title={label} class="block p-4 hover:bg-gray-200/50 dark:hover:bg-gray-600/60 transition-colors">{label}</a>
       {/each}
     </div>
@@ -31,6 +34,7 @@
   import { post } from '$lib/http';
   import { pageTitle } from '$lib/stores/layout-store';
   import { userRole, userSid } from '$lib/stores/user-store';
+  import { path } from '$lib/utils';
 
   interface Link {
     label: string;
@@ -41,8 +45,8 @@
     {
       title: 'User profile',
       links: [
-        { label: 'User details', href: '/user/details' },
-        { label: 'My articles', href: '/user/articles' }
+        { label: 'User details', href: path('/user/details') },
+        { label: 'My articles', href: path('/user/articles') }
       ]
     },
     {
@@ -50,14 +54,14 @@
       links: [
         { label: 'New article', href: linkArticlesNew },
         { label: 'All articles', href: linkArticles },
-        { label: 'About', href: '/page/about' }
+        { label: 'About', href: path('/page/about') }
       ]
     },
     {
       title: 'System settings',
       links: [
-        { label: 'Appearance', href: '/settings/appearance' },
-        { label: 'System access', href: '/settings/system-access' }
+        { label: 'Appearance', href: path('/settings/appearance') },
+        { label: 'System access', href: path('/settings/system-access') }
       ]
     }
   ];

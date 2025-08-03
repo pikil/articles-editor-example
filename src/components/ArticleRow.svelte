@@ -27,6 +27,8 @@
   import { fasEye, fasPencil, fasTrash } from '$lib/vendor/icons/fontawesome6-icons';
   import { post } from '$lib/http';
   import { role } from '$data/user-values';
+  import { asyncConfirmation } from '$lib/utils/async-confirmation';
+  import { path } from '$lib/utils';
 
   interface Props {
     article: Article;
@@ -39,22 +41,31 @@
   let removing = $state<boolean>();
 
   let isEditor = $derived(article.author === $userSid || $userRole === role.EDITOR );
-  let viewLink = $derived('/articles/view/' + article.id);
-  let editLink = $derived('/articles/edit/' + article.id);
+  let viewLink = $derived(path('/articles/view/' + article.id));
+  let editLink = $derived(path('/articles/edit/' + article.id));
 
   const removeArticle = async () => {
     if (removing)
       return;
 
-    removing = true;
+    const confirmed = await asyncConfirmation(
+      'Remove the article now?',
+      'This cannot be undone. Do you want to proceed?',
+      'Remove',
+      'Back'
+    );
 
-    const { success, message } = await post('article/delete', { id: String(article.id) });
+    if (confirmed) {
+      removing = true;
 
-    if (success)
-      onremove();
-    else
-      console.error(message); // eslint-disable-line no-console
+      const { success, message } = await post('article/delete', { id: String(article.id) });
 
-    removing = false;
+      if (success)
+        onremove();
+      else
+        console.error(message); // eslint-disable-line no-console
+
+      removing = false;
+    }
   };
 </script>

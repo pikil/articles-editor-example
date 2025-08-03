@@ -1,3 +1,5 @@
-export const linkArticles = '/articles/all';
+import { path } from '$lib/utils';
 
-export const linkArticlesNew = '/articles/new';
+export const linkArticles = path('/articles/all');
+
+export const linkArticlesNew = path('/articles/new');
