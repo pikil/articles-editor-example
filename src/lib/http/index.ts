@@ -18,7 +18,7 @@ interface Result {
 
 const baseApiUrl = import.meta.env.VITE_BASE_API_URL;
 
-if (browser && import.meta.env.DEV) {
+if (browser) {
   const randomInterval = (m: number, gap: number = 200) => Math.floor(Math.random() * ((m + gap) - (m - gap) + 1)) + (m - gap);
 
   // @ts-expect-error mock fetch

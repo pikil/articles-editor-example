@@ -36,8 +36,15 @@ The showcase supports Dark/Light modes which can be found in Dashboard > System 
 
 ## Running the project
 
-To run the dev version project locally:
+To run the dev version project locally, do the following.
 
+Create `env.local` file with two variables:
+
+```
+VITE_FETCH_MOCK_TIMEOUT = 300
+VITE_BASE_API_URL = "/"
+```
+Then, run the following commands:
 ```sh
 $ npm i
 $ npx playwright install
