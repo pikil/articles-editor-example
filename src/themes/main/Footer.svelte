@@ -4,7 +4,7 @@
     <a href={path('/page/about')} class="text-primary hover:underline px-2">Read more</a>
   </div>
   <IconButton
-    href="https://github.com/pikil/articles-editor-example"
+    href={linkGithub}
     icon={biGithub}
     target="_blank"
   />
@@ -15,4 +15,5 @@
   import { biGithub } from '$lib/vendor/icons/bootstrap-icons';
   import IconButton from '$components/ui/buttons/IconButton.svelte';
   import { path } from '$lib/utils';
+  import { linkGithub } from '$data/links';
 </script>

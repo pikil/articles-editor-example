@@ -47,7 +47,6 @@
     children?: import('svelte').Snippet<[]>;
   }
 
-  /** @type {Props} */
   let {
     label,
     title,
