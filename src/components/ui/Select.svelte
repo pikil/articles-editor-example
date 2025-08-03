@@ -1,5 +1,5 @@
 {#if label}
-  <p class="text-lg font-bold pb-1">{label}</p>
+  <p class="font-bold pb-1 px-2 text-sm">{label}</p>
 {/if}
 <div class={containerClasses}>
   <Icon
@@ -39,8 +39,8 @@
   }
 
   const inputClasses = 'appearance-none m-0 block w-full px-8 font-normal'
-    + ' dark:text-gray-400 bg-transparent bg-clip-padding bg-no-repeat rounded-xl cursor-pointer transition ease-in-out bg-transparent'
-    + ' text-gray-700 dark:text-gray-900'
+    + ' bg-transparent bg-clip-padding bg-no-repeat rounded-xl cursor-pointer transition ease-in-out bg-transparent'
+    + ' text-gray-700 dark:text-gray-300'
     + ' focus:border-blue-600 focus:outline-hidden';
 
   let {
@@ -52,16 +52,15 @@
     class: klass
   }: Props = $props();
 
-  let isChanged: boolean = $state(false);
-
-  let select: HTMLSelectElement | null  = $state(null);
+  let isChanged = $state<boolean>(false);
+  let select = $state<HTMLSelectElement | null>(null);
 
   const onchange = () => {
     isChanged = true;
     oninput?.call(null, value);
   };
 
-  let containerClasses = $derived('relative border border-gray-200 rounded-lg py-3'
+  let containerClasses = $derived('relative border border-gray-200 dark:border-gray-400 rounded-lg py-3'
     + (klass ? ' ' + klass : '')
   );
 </script>

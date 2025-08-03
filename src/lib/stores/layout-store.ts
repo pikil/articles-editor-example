@@ -1,7 +1,7 @@
 import { mainNameShort } from '$data/strings';
 import { writable } from 'svelte/store';
 
-interface LinkData {
+export interface LinkData {
   label: string;
   href: string;
 }

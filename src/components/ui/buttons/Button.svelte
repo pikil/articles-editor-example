@@ -8,6 +8,9 @@
       {/if}
     </span>
   {/if}
+  {#if icon}
+    <Icon name={icon} class={iconClass} />
+  {/if}
   {#if label}
     <span>{label}</span>
   {:else}
@@ -34,6 +37,8 @@
   interface Props {
     label?: string;
     title?: string;
+    icon?: string;
+    iconClass?: string;
     href?: string;
     disabled?: boolean;
     loading?: boolean;
@@ -44,9 +49,11 @@
 
   /** @type {Props} */
   let {
-    label = '',
-    title = '',
-    href = '',
+    label,
+    title,
+    icon,
+    iconClass = 'h-4 w-4',
+    href,
     disabled = false,
     loading = false,
     onclick = noop,
@@ -54,10 +61,11 @@
     children
   }: Props = $props();
 
-  let btn: HTMLButtonElement | HTMLAnchorElement | null = $state(null);
+  let btn = $state<HTMLButtonElement | HTMLAnchorElement | null>(null);
 
   let loadingClasses = $derived(loading ? ' btn-loading relative' : '');
   let classes = $derived('transition-colors rounded-lg select-none py-2 px-4 cursor-pointer'
+    + (icon ? ' flex flex-row items-center gap-2' : '')
     + (disabled ? ' opacity-50 pointer-events-none cursor-not-allowed' : '')
     + (klass ? ' ' + klass : '')
     + loadingClasses

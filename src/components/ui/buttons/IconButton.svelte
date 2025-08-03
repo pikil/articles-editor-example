@@ -45,9 +45,9 @@
     class: klass
   }: Props = $props();
 
-  let btn: HTMLButtonElement | (HTMLAnchorElement | null) = $state(null);
+  let btn = $state<HTMLButtonElement | (HTMLAnchorElement | null)>(null);
 
-  let loadingClasses = $derived(loading ? ' btn-loading relative' : '');
+  let loadingClasses = $derived(loading ? ' pointer-events-none' : '');
   let classes = $derived('transition-colors rounded-lg select-none cursor-pointer p-2 flex hover:bg-gray-300/30'
     + (disabled ? ' opacity-50 pointer-events-none cursor-not-allowed' : '')
     + (klass ? ' ' + klass : '')

@@ -1,4 +1,5 @@
 import { browser } from '$app/environment';
+import { getMockData } from './mock';
 
 interface FetchData {
   [key: string]: string;
@@ -20,50 +21,6 @@ const baseApiUrl = import.meta.env.VITE_BASE_API_URL;
 if (browser && import.meta.env.DEV) {
   const randomInterval = (m: number, gap: number = 200) => Math.floor(Math.random() * ((m + gap) - (m - gap) + 1)) + (m - gap);
 
-  const getMockData = (url: string, { method, body }: Input) => {
-    switch (true) {
-      case method === 'GET' && url.startsWith('/user/get-auth'): {
-        const role = localStorage.getItem('rid');
-        const sid = localStorage.getItem('sid');
-
-        return { success: true, message: (role || 0) + ',' + (sid || '-') };
-      }
-      case method === 'POST' && url.startsWith('/user/sign-in'): {
-        if (body instanceof FormData) {
-          const sid = body?.get('sid');
-          const role = body?.get('role');
-
-          if (sid && role) {
-            localStorage.setItem('sid', String(sid));
-            localStorage.setItem('rid', String(role));
-          }
-
-          return { success: true, message: 'Signed in' };
-        } else {
-          return { success: false, message: 'Incorrect parameters passed' };
-        }
-      }
-      case method === 'POST' && url.startsWith('/user/sign-out'): {
-        localStorage.clear();
-        return { success: true, message: 'Signed out' };
-      }
-      case method === 'POST' && url.startsWith('/user/update-role'): {
-        if (body instanceof FormData) {
-          const role = body?.get('role');
-
-          if (role)
-            localStorage.setItem('rid', String(role));
-
-          return { success: true, message: 'Updated!' };
-        } else {
-          return { success: false, message: 'Incorrect role parameter passed' };
-        }
-      }
-      default:
-        return { success: false, message: 'Unknown request data' };
-    }
-  };
-
   // @ts-expect-error mock fetch
   window.fetch = async (url: string, init: Input) => {
     console.log('Intercepted fetch:', url, init); // eslint-disable-line
@@ -71,7 +28,7 @@ if (browser && import.meta.env.DEV) {
     await new Promise(resolve => setTimeout(resolve, randomInterval(parseInt(import.meta.env.VITE_FETCH_MOCK_TIMEOUT))));
 
     // Simulating fake response after the delay
-    return new Response(JSON.stringify(getMockData(url, init)), {
+    return new Response(JSON.stringify(await getMockData(url, init)), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });

@@ -17,7 +17,7 @@
 }
 
 [data-mode="dark"] {
-  --primary: 0 132 209;
+  --primary: 89 230 255;
   --surface: 54 65 83;
   --on-surface: 255 255 255; /* Anythng on surface */
   --faded: 156 163 175;
@@ -31,4 +31,10 @@
 
 .btn-loading > *:not(.loading-content) {
   opacity: 0;
+}
+
+.article-row {
+  height: 80px;
+  content-visibility: auto;
+  contain: layout style paint;
 }

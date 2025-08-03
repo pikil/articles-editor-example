@@ -6,14 +6,14 @@
 <LeftSidebar />
 <div class="flex flex-col min-h-svh">
   <Header />
-  <Breadcrumbs />
+  {#if !onMain && $breadcrumbs.length}
+    <Breadcrumbs />
+  {/if}
   <Main>
     {#if $userRole}
       {@render children?.()}
     {:else}
-      <div class="grid place-items-center h-56">
-        <Icon name={mdiLoading} class="h-10 w-10 animate-spin text-faded/50" />
-      </div>
+      <PageLoader />
     {/if}
   </Main>
   <Footer />
@@ -28,11 +28,11 @@
   import Main from '$themes/main/Main.svelte';
   import Footer from '$themes/main/Footer.svelte';
   import LeftSidebar from '$themes/main/LeftSidebar.svelte';
-  import { breadcrumbs } from '$lib/stores/layout-store';
+  import { breadcrumbs, pageTitle } from '$lib/stores/layout-store';
   import { mainNameShort } from '$data/strings';
-  import Icon from '$components/ui/Icon.svelte';
-  import { mdiLoading } from '$lib/vendor/icons/mdi7-icons';
   import { userRole } from '$lib/stores/user-store';
+  import PageLoader from '$components/PageLoader.svelte';
+  import { onNavigate } from '$app/navigation';
 
   interface Props {
     children?: import('svelte').Snippet<[]>;
@@ -40,7 +40,12 @@
 
   let { children }: Props = $props();
 
+  let onMain = $derived($pageTitle === mainNameShort);
   let title = $derived(mainNameShort
-    + ($breadcrumbs.length > 0 ? ' | ' + $breadcrumbs[$breadcrumbs.length - 1].label : '')
+    + (onMain ? ' | Dashboard' : ' | ' + $pageTitle)
   );
+
+  onNavigate(() => {
+    $breadcrumbs = [];
+  });
 </script>

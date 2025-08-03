@@ -16,3 +16,12 @@ export const portal = (node: HTMLElement, id: string = 'modals') => {
   portalContainer.appendChild(node);
   node.focus();
 };
+
+export const isInViewport = (el: HTMLElement): boolean => {
+  const rect = el.getBoundingClientRect();
+
+  return !!document.elementFromPoint(
+    rect.left + el.offsetWidth / 2,
+    rect.top + el.offsetHeight / 2
+  );
+};

@@ -1,22 +1,19 @@
 <header class={classes}>
-  <div class="flex flex-row items-center rounded-lg bg-lime-400/30 p-4 shadow-md shadow-gray-300">
-    <div class="flex-1 flex flex-row items-center ellipsis">
+  <div class="flex flex-row items-center rounded-lg bg-primary/20 p-4 shadow-md shadow-gray-300 dark:shadow-gray-700">
+    <div class="flex-1 flex flex-row items-center ellipsis text-primary italic">
       <a href="/" title="Main page" class="font-bold">{mainNameShort}</a>
-      <Icon name={biChevronRight} class="text-faded h-3 w-3 mx-4" />
-      <div class="flex-1 text-faded ellipsis text-sm">{subtitle}</div>
+      <Icon name={fasCircle} class="h-1 w-1 mx-4" />
+      <div class="flex-1 ellipsis text-xs">{mainName}</div>
     </div>
     <IconButton icon={fasBars} />
   </div>
 </header>
 
 <script lang="ts">
-  import { mainNameShort } from '$data/strings';
-  import { pageTitle } from '$lib/stores/layout-store';
-  import { biChevronRight } from '$lib/vendor/icons/bootstrap-icons';
-  import { fasBars } from '$lib/vendor/icons/fontawesome6-icons';
+  import { mainName, mainNameShort } from '$data/strings';
+  import { fasBars, fasCircle } from '$lib/vendor/icons/fontawesome6-icons';
   import IconButton from '$components/ui/buttons/IconButton.svelte';
   import Icon from '$components/ui/Icon.svelte';
 
-  let classes = $derived('p-2 transition-padding');
-  let subtitle = $derived($pageTitle === mainNameShort ? 'Dashboard' : $pageTitle);
+  let classes = $derived('px-2 pt-2 transition-padding');
 </script>

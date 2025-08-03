@@ -23,9 +23,9 @@
   import { isValidEmail } from '$lib/utils/validation';
   import { hashId } from '$lib/utils';
 
-  let email: string = $state('');
-  let role: number = $state(0);
-  let error: string = $state('');
+  let email = $state<string>('');
+  let role = $state<number>(0);
+  let error = $state<string>('');
 
   const checkAuth = async () => {
     const { success, message } = await get('user/get-auth');

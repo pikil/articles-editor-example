@@ -2,7 +2,7 @@
 {#if showing}
   <div
       use:portal
-      transition:scale|global={transitionParams}
+      transition:scale={transitionParams}
       class="fixed w-full flex flex-col items-center z-40 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2 max-w-fit"
       aria-labelledby="modal-title"
       role="dialog"

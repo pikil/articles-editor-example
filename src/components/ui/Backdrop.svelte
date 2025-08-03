@@ -1,7 +1,7 @@
 {#if showing}
   <div
     use:portal
-    transition:fade|global={transitionParams}
+    transition:fade={transitionParams}
     id="backdrop"
     role="button"
     tabindex="0"
