@@ -180,11 +180,25 @@ export const getMockData = async (url: string, { method, body }: Input): Promise
     case method === 'GET' && url.startsWith('/articles/load-all'): {
       const params = new URLSearchParams(url.split('?')[1]);
       const page = parseInt(params.get('p') || '1');
+      const txt = params.get('t') || '';
+      const stat = parseInt(params.get('s') || '-1');
       const offset = (page - 1) * perPage;
 
-      const query = (rid === role.VIEWER)
-        ? db.articles.orderBy('id').filter(article => article.status === 1 || article.author === sid)
-        : db.articles.orderBy('id');
+      const needsTxt = !!txt;
+      const needsStatus = stat >= 0;
+      const isViewer = rid === role.VIEWER;
+      const query = db.articles.orderBy('id').filter(({ status, author, title, text }) => {
+        if (isViewer && author !== sid && status !== 1)
+          return false;
+
+        if (needsTxt && !title.includes(txt) && !text.includes(txt))
+          return false;
+
+        if (needsStatus && status !== stat)
+          return false;
+
+        return true;
+      });
 
       const articles = await query.reverse().offset(offset).limit(perPage).toArray();
 

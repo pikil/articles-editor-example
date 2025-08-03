@@ -2,7 +2,24 @@
   <div class="flex flex-row">
     <PageTitle text={title} class="flex-1" />
     <div>
-      <IconButton href={linkArticlesNew} icon={fasPlus} />
+      <Select
+        bind:value={filterStatus}
+        options={statusOptions}
+        placeholder="Status..."
+        placeholderValue={-1}
+        class="scale-75 relative -top-2"
+        oninput={(e) => { onFilterInput.call(e); }}
+      />
+    </div>
+    <div class="pt-1 relative">
+      <Icon name={fasMagnifyingGlass} class="h-3.5 w-3.5 text-faded/60 absolute top-2.5 pointer-events-none" />
+      <input
+        bind:value={filterTxt}
+        placeholder="Search..."
+        class="text-sm outline-none w-30 pl-6 text-faded"
+        oninput={(e) => { onFilterInput.call(e); }}
+        maxlength="50"
+      />
     </div>
   </div>
   <div class="rounded-lg border-2 border-gray-200 dark:border-gray-600 overflow-hidden">
@@ -27,21 +44,28 @@
   import ArticleRow from '$components/ArticleRow.svelte';
   import PageTitle from '$components/PageTitle.svelte';
   import Button from '$components/ui/buttons/Button.svelte';
-  import IconButton from '$components/ui/buttons/IconButton.svelte';
+  import Icon from '$components/ui/Icon.svelte';
   import InfiniteFetcher from '$components/ui/InfiniteFetcher.svelte';
+  import Select from '$components/ui/Select.svelte';
   import { pageClasses, primaryBtnClasses } from '$data/css-classes';
   import { linkArticlesNew } from '$data/links';
   import { perPage } from '$data/numbers';
+  import { statuses } from '$data/user-values';
   import { get } from '$lib/http';
   import { setPageData } from '$lib/stores/layout-store';
   import { type Article } from '$lib/utils/db';
-  import { fasPlus } from '$lib/vendor/icons/fontawesome6-icons';
+  import debounce from '$lib/utils/debounce';
+  import { fasMagnifyingGlass, fasPlus } from '$lib/vendor/icons/fontawesome6-icons';
   import { onMount } from 'svelte';
 
   interface Props {
     title: string;
     url: string;
   }
+
+  const statusOptions = statuses.map((label, value) => {
+    return { label, value };
+  });
 
   let { title, url }: Props = $props();
 
@@ -50,6 +74,8 @@
   let loading = $state<boolean>(false);
   let error = $state<string>('');
   let page = $state<number>(1);
+  let filterTxt = $state<string>('');
+  let filterStatus = $state<number>(-1);
 
   const loadArticles = async () => {
     if (allLoaded || loading) {
@@ -58,7 +84,11 @@
 
     loading = true;
 
-    const { success, message } = await get(url + '?p=' + page);
+    const { success, message } = await get(url
+      + '?p=' + page
+      + (filterTxt.length > 2 ? '&t=' + encodeURIComponent(filterTxt) : '')
+      + (filterStatus >= 0 ? '&s=' + filterStatus : '')
+    );
 
     if (!success) {
       allLoaded = true;
@@ -81,6 +111,18 @@
       error = 'Invalid data...';
     }
   };
+
+  const resetList = () => {
+    articles = [];
+    allLoaded = false;
+    page = 1;
+    loadArticles();
+  };
+
+  const onFilterInput = debounce('search', () => {
+    if (filterTxt.length > 2 || !filterTxt.length)
+      resetList();
+  }, 600);
 
   const dropArticleFromList = (id: number) => {
     articles = articles.filter(article => article.id !== id);

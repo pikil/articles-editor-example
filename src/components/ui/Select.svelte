@@ -13,7 +13,7 @@
     {onchange}
   >
     {#if !isChanged && placeholder}
-      <option value={0}>{placeholder}</option>
+      <option value={placeholderValue}>{placeholder}</option>
     {/if}
     {#each options as { value: v, label: l } (v)}
       <option value={v} selected={v === value}>{l}</option>
@@ -34,6 +34,7 @@
     options: SelectOption[];
     label?: string;
     placeholder?: string;
+    placeholderValue?: number | string;
     oninput?: (_: string | number) => void;
     class?: string;
   }
@@ -47,6 +48,7 @@
     value = $bindable(0),
     options,
     placeholder = '',
+    placeholderValue = 0,
     label = '',
     oninput,
     class: klass
